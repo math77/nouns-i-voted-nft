@@ -7,7 +7,7 @@
 const hre = require("hardhat");
 
 async function main() {
-  const NounsIVotedNFT = await hre.ethers.getContractFactory("NounsIVotedNFT");
+  const NounsIVotedNFT = await hre.ethers.getContractFactory("NounsIVotedBadge");
   const nounsIVoted = await Lock.deploy();
 
   await nounsIVoted.deployed();
