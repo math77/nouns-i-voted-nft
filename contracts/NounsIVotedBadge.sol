@@ -16,12 +16,18 @@ contract NounsIVotedBadge is ERC721 {
 
   IMetadataRenderer public renderer;
 
-
+  mapping(uint256 tokenId => uint256 proposalId) private _tokenIdToProposalId;
   mapping(address voter => mapping(uint256 proposalId => bool minted)) private _mintedBadge;
+
+  event VoterBadgeMinted(
+    uint256 proposalId,
+    uint256 badgeId
+  );
 
   error CannotBeZeroAddressError();
   error AddressNotVotedInProposalError();
   error AlreadyMintedProposalBadgeError();
+  error VoterHasMoreThanZeroVotesError();
 
   constructor(IMetadataRenderer _renderer) ERC721("NOUNS I VOTED", "NIV") {
     if(address(_renderer) == address(0)) revert CannotBeZeroAddressError();
@@ -32,15 +38,23 @@ contract NounsIVotedBadge is ERC721 {
   
   function claimBadge(uint256 proposalId) external returns (uint256) {
     if(!NounsDAOLogicV2(NOUNS_DAO).getReceipt(proposalId, msg.sender).hasVoted) revert AddressNotVotedInProposalError(); 
+    if(NounsDAOLogicV2(NOUNS_DAO).getReceipt(proposalId, msg.sender).votes > 0) revert VoterHasMoreThanZeroVotesError();
+    if(_mintedBadge[msg.sender][proposalId]) revert AlreadyMintedProposalBadgeError();
 
     unchecked {
       _mint(msg.sender, ++_tokenId);
     }
 
+    _mintedBadge[msg.sender][proposalId] = true;
+    _tokenIdToProposalId[_tokenId] = proposalId;
 
+    emit VoterBadgeMinted({
+      proposalId: proposalId,
+      badgeId: _tokenId
+    });
   }
 
   function tokenURI(uint256 tokenId) public view override returns (string memory) {
-    return renderer.tokenURI(tokenId);
+    return renderer.tokenURI(tokenId, _tokenIdToProposalId[tokenId]);
   }
 }

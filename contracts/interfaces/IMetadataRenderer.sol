@@ -4,6 +4,6 @@ pragma solidity 0.8.18;
 
 interface IMetadataRenderer {
 
-  function tokenURI(uint256 tokenId) external view returns (string memory);
+  function tokenURI(uint256 tokenId, uint256 proposalId) external view returns (string memory);
 
 }

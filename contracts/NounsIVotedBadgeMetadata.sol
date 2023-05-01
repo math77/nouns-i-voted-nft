@@ -6,7 +6,7 @@ import {IMetadataRenderer} from "./interfaces/IMetadataRenderer.sol";
 
 contract NounsIVotedBadgeMetadata is IMetadataRenderer {
 
-  function tokenURI(uint256 tokenId) external view override returns (string memory) {
+  function tokenURI(uint256 tokenId, uint256 proposalId) external view override returns (string memory) {
     return "";
   }
 }
