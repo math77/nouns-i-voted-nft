@@ -55,6 +55,16 @@ contract NounsIVotedBadge is ERC721 {
   }
 
   function tokenURI(uint256 tokenId) public view override returns (string memory) {
-    return renderer.tokenURI(tokenId, _tokenIdToProposalId[tokenId]);
+    _requireMinted(tokenId);
+
+    /*
+    this line:
+
+    is soulbond -> line correct
+    not soulbond -> bug line
+    */
+    uint8 voterSupport = NounsDAOLogicV2(NOUNS_DAO).getReceipt(_tokenIdToProposalId[tokenId], ownerOf(tokenId)).support;
+
+    return renderer.tokenURI(tokenId, _tokenIdToProposalId[tokenId], voterSupport);
   }
 }
