@@ -18,13 +18,15 @@ describe("NounsIVoted", function () {
     svgsContract = await svgsFactory.deploy();
     await svgsContract.deployed();
 
-    //const fontFactory = await hre.ethers.getContractFactory('LondrinaRegularFont');
-    //fontContract = await fontFactory.deploy();
-    //await fontContract.deployed();
+    /*
+    const fontFactory = await hre.ethers.getContractFactory('LondrinaRegularFont');
+    fontContract = await fontFactory.deploy();
+    await fontContract.deployed();
+    */
 
     //DEPLOY METADATA
     const badgeMetadataFactory = await hre.ethers.getContractFactory('NounsIVotedBadgeMetadata');
-    metadataContract = await badgeMetadataFactory.deploy(svgsContract.address);
+    metadataContract = await badgeMetadataFactory.deploy(svgsContract.address, svgsContract.address);
     await metadataContract.deployed();
 
 
@@ -35,7 +37,7 @@ describe("NounsIVoted", function () {
   describe("Token URI Test", function () {
     it("Return URI", async function () {
 
-      let tokenUri = await metadataContract.tokenURI(2, 130, 1);
+      let tokenUri = await metadataContract.tokenURI(2, 6713, 1);
 
       console.log("URI: ", tokenUri);
 

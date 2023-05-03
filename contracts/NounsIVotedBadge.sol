@@ -28,6 +28,7 @@ contract NounsIVotedBadge is ERC721 {
   error AddressNotVotedInProposalError();
   error AlreadyMintedProposalBadgeError();
   error VoterHasMoreThanZeroVotesError();
+  error CannotTransferError();
 
   constructor(IMetadataRenderer _renderer) ERC721("NOUNS I VOTED", "NIV") {
     if(address(_renderer) == address(0)) revert CannotBeZeroAddressError();
@@ -67,4 +68,19 @@ contract NounsIVotedBadge is ERC721 {
 
     return renderer.tokenURI(tokenId, _tokenIdToProposalId[tokenId], voterSupport);
   }
+
+  function _beforeTokenTransfer(
+    address from,
+    address to,
+    uint256 /* firstTokenId */,
+    uint256 /* batchSize */
+  ) internal virtual override {
+
+    if(from != address(0) || to != address(0)) {
+      revert CannotTransferError();
+    }
+
+  }
+
+
 }

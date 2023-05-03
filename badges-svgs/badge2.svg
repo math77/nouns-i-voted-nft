@@ -13,8 +13,8 @@
   }
 </style>
 <circle cx="225" cy="225" r="225" fill="#FFC110"/>
-  <text x="153" y="135" class="general font-size-1">I VOTED</text>
-  <text x="130" y="345" class="general font-size-1">PROP 234</text>
+  <text x="50%" y="25%" dominant-baseline="middle" text-anchor="middle" class="general font-size-1">I VOTED</text>
+  <text x="50%" y="75%" dominant-baseline="middle" text-anchor="middle" class="general font-size-1">PROP 234</text>
 <path d="M230 150H121V174H230V150Z" class="noggle"/>
 <path d="M356 150H248V174H356V150Z" class="noggle"/>
 <path d="M139 174H121V196H139V174Z" class="noggle"/>
@@ -55,3 +55,4 @@
 
 
 </svg>
+
