@@ -1,3 +1,6 @@
 [submodule "packages/nouns-monorepo"]
 	path = packages/nouns-monorepo
 	url = https://github.com/nounsDAO/nouns-monorepo
+[submodule "packages/ethfs"]
+	path = packages/ethfs
+	url = https://github.com/holic/ethfs
