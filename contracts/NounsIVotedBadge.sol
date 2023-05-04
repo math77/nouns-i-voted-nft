@@ -18,8 +18,6 @@ contract NounsIVotedBadge is ERC721, NounsDAOStorageV2 {
 
   IMetadataRenderer public renderer;
 
-  address private _metadataContract;
-
   mapping(uint256 tokenId => uint256 proposalId) private _tokenIdToProposalId;
   mapping(address voter => mapping(uint256 proposalId => bool minted)) private _mintedBadge;
 
@@ -34,10 +32,10 @@ contract NounsIVotedBadge is ERC721, NounsDAOStorageV2 {
   error VoterHasMoreThanZeroVotesError();
   error CannotTransferError();
 
-  constructor(address _renderer) ERC721("NOUNS I VOTED", "NIV") {
-    if(_renderer == address(0)) revert CannotBeZeroAddressError();
+  constructor(IMetadataRenderer _renderer) ERC721("NOUNS I VOTED", "NIV") {
+    if(address(_renderer) == address(0)) revert CannotBeZeroAddressError();
 
-    _metadataContract = _renderer;
+    renderer = _renderer;
   }
 
   
