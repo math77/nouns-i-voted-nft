@@ -3,6 +3,7 @@ pragma solidity 0.8.18;
 
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
+
 import {NounsDAOLogicV2} from "packages/nouns-monorepo/packages/nouns-contracts/contracts/governance/NounsDAOLogicV2.sol";
 
 import {NounsDAOStorageV2} from "packages/nouns-monorepo/packages/nouns-contracts/contracts/governance/NounsDAOInterfaces.sol";
@@ -24,6 +25,10 @@ contract NounsIVotedBadge is ERC721, NounsDAOStorageV2 {
   event VoterBadgeMinted(
     uint256 indexed proposalId,
     uint256 indexed badgeId
+  );
+
+  event UpdatedMetadataRenderer(
+    address newRenderer
   );
 
   error CannotBeZeroAddressError();
@@ -69,6 +74,14 @@ contract NounsIVotedBadge is ERC721, NounsDAOStorageV2 {
     uint8 voterSupport = NounsDAOLogicV2(NOUNS_DAO).getReceipt(_tokenIdToProposalId[tokenId], ownerOf(tokenId)).support;
 
     return renderer.tokenURI(tokenId, _tokenIdToProposalId[tokenId], voterSupport);
+  }
+
+  function updateMetadaRenderer(IMetadataRenderer newRenderer) external {
+    if(address(newRenderer) == address(0)) revert CannotBeZeroAddressError();
+
+    renderer = newRenderer;
+
+    emit UpdatedMetadataRenderer({newRenderer: address(newRenderer)});
   }
 
   function _beforeTokenTransfer(
