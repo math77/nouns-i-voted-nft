@@ -14,11 +14,9 @@ contract NounsIVotedBadge is ERC721, Ownable, NounsDAOStorageV2 {
   uint256 private _tokenId;
 
   address payable public constant NOUNS_DAO = payable(0x6f3E6272A167e8AcCb32072d08E0957F9c79223d);
-
   IMetadataRenderer public renderer;
   
   mapping(uint256 tokenId => IMetadataRenderer.Badge badge) private _tokenIdToBadge;
-
   mapping(address voter => mapping(uint256 proposalId => bool minted)) private _mintedBadge;
 
   event VoterBadgeMinted(
@@ -76,8 +74,6 @@ contract NounsIVotedBadge is ERC721, Ownable, NounsDAOStorageV2 {
     _requireMinted(tokenId);
 
     IMetadataRenderer.Badge memory badge = _tokenIdToBadge[tokenId];
-
-    //uint8 voterSupport = NounsDAOLogicV2(NOUNS_DAO).getReceipt(badge.proposalId, badge.voter).support;
 
     return renderer.tokenURI(tokenId, badge);
   }
