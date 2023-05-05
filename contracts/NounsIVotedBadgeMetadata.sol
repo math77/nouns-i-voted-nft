@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.18;
 
-
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 import {IFileStore} from "packages/ethfs/packages/contracts/src/IFileStore.sol";
 import {NounsDescriptorV2, ISVGRenderer} from "packages/nouns-monorepo/packages/nouns-contracts/contracts/NounsDescriptorV2.sol";
-
 
 import {IMetadataRenderer} from "./interfaces/IMetadataRenderer.sol";
 
@@ -71,7 +69,7 @@ contract NounsIVotedBadgeMetadata is IMetadataRenderer {
 
     svg = string.concat(
       _SVG_START_TAG,
-      '<style>@import url("https://fonts.googleapis.com/css2?family=Londrina+Solid"); .general {font-family: "Londrina Solid"; fill: #000;}.font-size-1 {font-size: 42px;} .font-size-2 {font-size: 40px;}</style>',
+      '<style>@import url("https://fonts.googleapis.com/css2?family=Londrina+Solid"); .general {font-family: "Londrina Solid"; fill: #000;}.font-size-1 {font-size: 42px;}</style>',
       '<circle cx="160" cy="160" r="160" fill="#E1D7D5"/>',
       '<circle cx="160" cy="160" r="153" fill="none" stroke-width="5" stroke="',
       noggleColor(support),
