@@ -8,9 +8,13 @@ const hre = require("hardhat");
 
 async function main() {
   const NounsIVotedNFT = await hre.ethers.getContractFactory("NounsIVotedBadge");
-  const nounsIVoted = await Lock.deploy();
+  const nounsIVoted = await NounsIVotedNFT.deploy();
 
   await nounsIVoted.deployed();
+
+  let txn;
+  txn = await nounsIVoted.claimBadge(271);
+  await txn.wait();
 
   console.log(`Deployed to: ${nounsIVoted.address}`);
 }
